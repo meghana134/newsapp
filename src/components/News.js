@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import NewsItems from './NewsItems';
+import Spinner from './Spinner';
 
 export default class News extends Component {
   
@@ -20,7 +21,7 @@ export default class News extends Component {
   // API FETCHING
   async componentDidMount(){
     console.log("cdm");
-    let url ="https://newsapi.org/v2/top-headlines?country=in&apiKey=7be91d68e19a43619ea346e552812330&page=1&pagesize=20";
+    let url =`https://newsapi.org/v2/top-headlines?country=in&apiKey=7be91d68e19a43619ea346e552812330&page=1&pagesize=${this.props.pagesize}`;
     let data =  await fetch(url);
     let parseData= await data.json();
     console.log(parseData)
@@ -30,15 +31,17 @@ export default class News extends Component {
   handlePrevClick=async ()=>{
     
     console.log("prevuous");
-    let url =`https://newsapi.org/v2/top-headlines?country=in&apiKey=7be91d68e19a43619ea346e552812330&page=${this.state.page-1}&pagesize=20`;
+    let url =`https://newsapi.org/v2/top-headlines?country=in&apiKey=7be91d68e19a43619ea346e552812330&page=${this.state.page-1}&pagesize=${this.props.pagesize}`;
+    this.setState({loading:true})
     let data =  await fetch(url);
     let parseData= await data.json();
-    console.log(parseData)
+    // console.log(parseData)
     
     this.setState({
       //page is decreasing
       page: this.state.page-1,
-      articles: parseData.articles
+      articles: parseData.articles,
+      loading:false
 
     })
 
@@ -49,19 +52,20 @@ export default class News extends Component {
   handlenextClick= async ()=>{
     console.log("next");
     //to check next page exists or not
-    if (this.state.page + 1>Math.ceil(this.state.totalResults/20)){
+    if (!(this.state.page + 1>Math.ceil(this.state.totalResults/this.props.pagesize))){
 
-    }
-else{
-    let url =`https://newsapi.org/v2/top-headlines?country=in&apiKey=7be91d68e19a43619ea346e552812330&page=${this.state.page+1}&pagesize=20`;
+    
+    let url =`https://newsapi.org/v2/top-headlines?country=in&apiKey=7be91d68e19a43619ea346e552812330&page=${this.state.page+1}&pagesize=${this.props.pagesize}`;
+    {this.setState({loading:true})}
     let data =  await fetch(url);
     let parseData= await data.json();
-    console.log(parseData)
+    // console.log(parseData)
     
     this.setState({
       //page is increasing
       page: this.state.page + 1,
-      articles: parseData.articles
+      articles: parseData.articles,
+      loading:false
 
     })
   }
@@ -73,10 +77,12 @@ else{
     console.log("render")
     return (
       <div className='container my-3'>
-      <h2>NewsHunt - Top Headlines</h2>
+      <h2 className='text-center'>NewsHunt - Top Headlines</h2>
+      {this.state.loading&&<Spinner/>}
       
       <div className='row'>
-      {this.state.articles.map((element)=>{
+      {/* //agar loadin true nhi hai tho card display kar na hai ya tho nhi */}
+      {!this.state.loading && this.state.articles.map((element)=>{
        return <div className='col-md-3' key={element.url}>
       <NewsItems  title={element.title?element.title.slice(0,30):""} description={element.description?element.description.slice(0,60):""}  imageUrl={element.urlToImage} newsUrl={element.url}/>
       </div>
@@ -87,7 +93,7 @@ else{
       </div>
       <div className='container d-flex justify-content-between'>
       <button disabled={this.state.page<=1} type="button" className="btn btn-dark" onClick={this.handlePrevClick}>  &larr; Previous </button>
-      <button type="button" className="btn btn-dark" onClick={this.handlenextClick}>Next  &rarr;</button>
+      <button disabled={this.state.page + 1>Math.ceil(this.state.totalResults/this.props.pagesize) } type="button" className="btn btn-dark" onClick={this.handlenextClick}>Next  &rarr;</button>
 
       </div>
     

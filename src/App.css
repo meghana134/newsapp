@@ -6,6 +6,10 @@
   height: 40vmin;
   pointer-events: none;
 }
+.spinner{
+  text-align: center;
+  /* margin-top: 385px; */
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
