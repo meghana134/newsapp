@@ -17,8 +17,23 @@ export default class extends Component {
         <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
       </li>
       <li className="nav-item">
-        <a className="nav-link" href="#">Link</a>
+        <a className="nav-link" href="About">About</a>
+      </li><li className="nav-item">
+        <a className="nav-link" href="Science">Science</a>
       </li>
+      <li className="nav-item">
+        <a className="nav-link" href="Health">Health</a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="Technology">Technology</a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="Sports">Sports</a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="Film">Film</a>
+      </li>
+      
       
           
       
