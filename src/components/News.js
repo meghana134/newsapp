@@ -17,8 +17,8 @@ export default class News extends Component {
   }
 
   
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     console.log("i 5 am xonstructor")
     this.state={
      articles: [],
@@ -26,7 +26,9 @@ export default class News extends Component {
      //initally page is to 1
      page:1
 
+
     }
+    document.title = `${this.props.category} - NewsMonkey`;
   }
 
   // API FETCHING
