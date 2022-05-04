@@ -13,7 +13,7 @@ export default class App extends Component {
       <Router>
       <Navbar />
         <Switch>
-          <Route exact path="/">
+          <Route exact path="/" category="health">
           </Route>
           <Route exact path="/technology">
           <News key="technology" pagesize={5} country="in" category="technology"/>
@@ -29,6 +29,9 @@ export default class App extends Component {
           </Route>
           <Route exact path="/film">
           <News key="film" pagesize={5} country="in" category="film"/>
+          </Route>
+          <Route exact path="/about">
+          <News key="film" pagesize={5} country="in" category="about"/>
           </Route>
 
 

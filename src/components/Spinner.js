@@ -5,7 +5,7 @@ import loading from "./loading.gif";
 function Spinner() {
   return (
     <div className='spinner'>
-        <img src={loading} alt="loading">
+        <img  className= "my-3" src={loading} alt="loading">
 
         </img>
     </div>
