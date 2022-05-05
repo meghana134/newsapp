@@ -39,25 +39,23 @@ export default class News extends Component {
   }
 
   async updateNews(pageNo){
+    this.props.setProgress(10);
     console.log("cdm");
     const url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&categoty=${this.props.category}&apiKey=7be91d68e19a43619ea346e552812330&page=${this.state.page}&pagesize=${this.props.pagesize}`;
     let data =  await fetch(url);
+    this.props.setProgress(30);
     let parseData= await data.json();
+    this.props.setProgress(70);
     console.log(parseData)
     this.setState({articles:parseData.articles, totalResults:parseData.totalResults,
     loading:false,})
+    this.props.setProgress(100);
     
   }
 
   // API FETCHING
   async componentDidMount(){
-    console.log("cdm");
-    let url =`https://newsapi.org/v2/top-headlines?country=${this.props.country}&categoty=${this.props.category}&apiKey=7be91d68e19a43619ea346e552812330&page=1&pagesize=${this.props.pagesize}`;
-    let data =  await fetch(url);
-    let parseData= await data.json();
-    console.log(parseData)
-    this.setState({articles:parseData.articles, totalResults:parseData.totalResults,
-    loading:false})
+   this.updateNews();
   }
 
   handlePrevClick=async ()=>{
