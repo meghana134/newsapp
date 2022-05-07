@@ -23,7 +23,7 @@ const News = (props)=>{
 
 
     
-    // document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
+    
 
   const updateNews =  async ()=>{
     props.setProgress(10);
@@ -44,6 +44,7 @@ const News = (props)=>{
 
   // API FETCHING
   useEffect(()=>{
+    document.title = `${capitalizeFirstLetter(props.category)} - NewsMonkey`;
   
    updateNews();
   },[])
@@ -59,9 +60,10 @@ const News = (props)=>{
 
   //FUNCTION FOR INFINITE SCROLL
  const fetchMoreData = async() => {
-    setPage(page+1);
+   
     // console.log("cdm");
-    const url =`https://newsapi.org/v2/top-headlines?country=${props.country}&categoty=${props.category}&apiKey=7be91d68e19a43619ea346e552812330&page=${page}&pagesize=${props.pagesize}`;
+    const url =`https://newsapi.org/v2/top-headlines?country=${props.country}&categoty=${props.category}&apiKey=7be91d68e19a43619ea346e552812330&page=${page+1}&pagesize=${props.pagesize}`;
+    setPage(page+1);
     let data =  await fetch(url);
     let parseData= await data.json();
     console.log(parseData)
@@ -86,8 +88,8 @@ const News = (props)=>{
   
     console.log("render")
     return (
-      <div className='container my-3'>
-      <h2 className='text-center'>NewsHunt - Top Headlines from {capitalizeFirstLetter(props.category)} </h2>
+      <div className='container my-3' >
+      <h2 className='text-center' style={{marginTop:'90px'}}>NewsHunt - Top Headlines from {capitalizeFirstLetter(props.category)} </h2>
       {loading&&<Spinner/>}
       
       <InfiniteScroll
